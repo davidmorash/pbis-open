@@ -2585,14 +2585,15 @@ printf("\n\n got line '%.*s'\n\n", num, buf);
                      * before search.)
                      */
                     hist_search = strdup(&pszCmdLine[1]);
-                    hist_search[strlen(&pszCmdLine[1]) - 1] = '\0';
+                    hist_search[strlen(hist_search) - 1] = '\0';
                     rv = RegShellGetHistorySearch(hist_search, &hist_str);
-                    LWREG_SAFE_FREE_STRING(hist_search);
 
                     if (rv == HISTORY_ERROR)
                     {
-                        printf("regshell: %s: event not found\n", hist_str);
+                        printf("regshell: %s: event not found\n", hist_search);
                     }
+
+                    LWREG_SAFE_FREE_STRING(hist_search);
                 }
             }
 
