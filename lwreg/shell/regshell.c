@@ -2449,9 +2449,18 @@ RegShellHistoryDisplay()
 }
 
 
-static void trunc_string(char **string, size_t n) {
+static void dumb_trunc(char **string, size_t n) {
 	*string[(strlen(*string) - n)] = '\0';
 }
+
+
+static void trunc_string(char **string, size_t n) {
+	// hoo boy - too smart for my own good
+	char *p = *string;
+	while (*p++);
+	*(p - n) = '\0';
+}
+
 
 DWORD
 RegShellProcessInteractiveEditLine(
