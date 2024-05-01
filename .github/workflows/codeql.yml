@@ -55,6 +55,10 @@ jobs:
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
     steps:
+    - name: Install required software
+      run: |
+        sudo apt install -y build-essential fakeroot devscripts debhelper autoconf automake libtool flex bison libpam0g-dev libxml2-dev libpopt-dev
+      
     - name: Checkout repository
       uses: actions/checkout@v4
 
