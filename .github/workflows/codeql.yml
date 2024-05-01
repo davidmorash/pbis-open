@@ -46,12 +46,6 @@ jobs:
         include:
         - language: c-cpp
           build-mode: manual
-        - language: java-kotlin
-          build-mode: none # This mode only analyzes Java. Set this to 'autobuild' or 'manual' to analyze Kotlin too.
-        - language: javascript-typescript
-          build-mode: none
-        - language: python
-          build-mode: none
         # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -86,7 +80,7 @@ jobs:
     - if: matrix.build-mode == 'manual'
       run: |
         mkdir -p dist
-        cd dist && $GITHUB_WORKSPACE/src/linux/configure
+        cd dist && $GITHUB_WORKSPACE/configure --build-isas=x86_64
         make all
         
     - name: Perform CodeQL Analysis
