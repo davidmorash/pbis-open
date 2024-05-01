@@ -86,9 +86,7 @@ jobs:
     - if: matrix.build-mode == 'manual'
       run: |
         mkdir -p dist
-      run: |
         cd dist && $GITHUB_WORKSPACE/src/linux/configure
-      run: |
         make all
         
     - name: Perform CodeQL Analysis
