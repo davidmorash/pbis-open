@@ -2449,6 +2449,11 @@ RegShellHistoryDisplay()
 }
 
 
+static void truncate_string_by_n(char **s, size_t n) {
+  const size_t len = strlen(*s);
+  *s[(n > len) ? len - 1 : len - (n - 1)] = '\0'; 
+}
+
 DWORD
 RegShellProcessInteractiveEditLine(
     FILE *readFP,
@@ -2585,14 +2590,15 @@ printf("\n\n got line '%.*s'\n\n", num, buf);
                      * before search.)
                      */
                     hist_search = strdup(&pszCmdLine[1]);
-                    hist_search[strlen(&pszCmdLine[1]) - 1] = '\0';
+                    truncate_string_by_n(&hist_search, 1);
                     rv = RegShellGetHistorySearch(hist_search, &hist_str);
-                    LWREG_SAFE_FREE_STRING(hist_search);
 
                     if (rv == HISTORY_ERROR)
                     {
-                        printf("regshell: %s: event not found\n", hist_str);
+                       printf("regshell: %s: event not found\n", hist_search);
                     }
+
+                    LWREG_SAFE_FREE_STRING(hist_search);
                 }
             }
 
